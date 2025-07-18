@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Документ</title>
+	<link href="../css/styles.css" rel="stylesheet">
+	<link href="../css/main.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Share+Tech&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap"
+		rel="stylesheet">
+</head>
+<body>
+	<div class="wraper">
+		<div class="blok__1">
+			<h1>
+				Работа со шрифтами. Локальные, иконные шрифты и подключение из Google Fonts
+			</h1>
+			<h3>Подключение шрифтов из Google Fonts:</h3>
+			<p>Самый простой способ — воспользоваться плагином для VS Code <span>Google Fonts</span></p>
+			<span class="span">1. Нажимаем F1 и ищем плагин Google Fonts</span><br><br>
+			<span class="span">2. Если хотим подключить шрифт отдельным тегом link в HTML-файл, выбираем Google Fonts:
+				insert <code>&lt;link&gt;</code></span><br><br>
+			<span class="span">3. Если хотим подключить шрифт к файлу стилей (обычно это src/styles/style.scss), выбираем
+				Google Fonts: insert CSS @import</span><br><br>
+			<span class="span">4. Из списка выбираем нужный шрифт, можно воспользоваться поиском</span><br><br>
+			<span class="span">5. Из списка выбираем нужные вариации шрифта</span><br><br>
+			<span class="span">6. Нажимаем «Ok»</span>
+			<p><span>Пример подключения шрифта Montserrat + вариации:</span></p>
+			<p>
+				@import url("https://fonts.googleapis.com/css?family=Montserrat:regular,600,700&display=swap");
+			</p>
+			<p>
+				Шрифты, подключенные из Google Fonts, не должны попадать в папку с результатом <span>(dist)</span>, они
+				подгружаются с сервера
+				Google. Но если вы хотите, чтобы подключенные удаленные шрифты стали локальными, используйте настройку ЧФ4:
+				<span>fonts -> download: true</span>
+			</p>
+			<p>
+				Также стоит отметить, что получить строку для подключения шрифта можно и без плагина на сайте <span>Google
+					Fonts</span>.
+			</p>
+			<h2>Подключение локальных файлов шрифтов</h2>
+			<p>
+				В стартовом шаблоне «Чертоги Фрилансера» 4 (далее — ЧФ четырех) весь процесс подключения локальных и иконных
+				шрифтов
+				максимально автоматизирован. Исходные файлы шрифтов конвертируются в современный <a class="a"
+					href="https://www.w3.org/TR/WOFF2/">веб-формат .WOFF2</a>, а также выполняется
+				запись подключения шрифтов в файл стилей, включая значения font-weight и font-style на основе имени файла.
+			</p>
+			<p>Правила названий файлов шрифтов</p>
+			<p>Поскольку ЧФ4 автоматизирует процесс подключения семейств шрифтов и их вариаций, важно правильно называть
+				файлы по схеме:</p>
+			<p>название семейства-вариация</p>
+			<p>
+				Например, если файл называется KoPubBatang-Bold.ttf, то система подключит семейство (font-family)
+				KoPubBatang и вариацию (font-weight) 700.
+			</p>
+			<p>Пошаговая инструкция подключения локальных шрифтов:</p>
+			<p><span>Скачать или получить от дизайнера/заказчика файлы шрифтов в формате .TTF, .OTF или .WOFF2 и поместить
+					их в папку src/assets/fonts</span></p>
+			<p><span>Проверить названия файлов с учетом информации выше</span></p>
+			<p><span>Запустить режим разработки</span></p>
+			<p><span>
+					Указать семейство шрифта по умолчанию в переменной $fontFamily в файле src/style/settings.scss, а при
+					наличии других семейств и/или вариаций шрифта — в других селекторах в стилях проекта
+				</span></p>
+			<p>Как ЧФ4 обрабатывает шрифты?</p>
+			<p>При запуске сборки в любом режиме ЧФ4 проверяет, есть ли файлы шрифтов в форматах .TTF, .OTF или .WOFF2 в
+				папке src/assets/fonts</p>
+			<p>Далее происходят следующие этапы:</p>
+			<p><span>Файлы .OTF (если они есть) конвертируются в .TTF и сохраняются в папке src/assets/fonts</span></p>
+			<p><span>
+					Файлы .TTF (если они есть) конвертируются в .WOFF2 и записываются в папку src/assets/fonts
+				</span></p>
+			<p><span>
+					Файлы .WOFF2 (если они есть) просто сканируются для следующего этапа подключения
+				</span></p>
+			<p><span>Исходные файлы .OTF и .TTF (если они есть) удаляются</span></p>
+			<p><span>
+					После конвертации ЧФ4 запишет в файл src/styles/fonts/fonts.css конструкции @font-face для всех файлов,
+					включая значения font-weight и font-style, основанные на имени файла шрифта. Заполненный файл стилей
+					автоматически подключится ко всем HTML-страницам проекта
+				</span></p>
+			<h2>Создание иконного шрифта и подключение его в проект:</h2>
+			<p><span>1. Поместить иконки в формате SVG в папку src/assets/svgicons</span></p>
+			<p><span>2. Включить в настройках ЧФ4 создание иконного шрифта (fonts->iconsfont: true)</span></p>
+			<p><span>3. Запустить режим разработки</span></p>
+			<p><span>
+					4. Использовать специальные классы в HTML-разметке для вывода иконки из набора. Посмотреть весь набор
+					иконок в шрифте и их классы можно по ссылке в панели разработчика (если она включена в настройках ЧФ4).
+				</span></p>
+			<h3>Классы иконного шрифта можно использовать как отдельно:</h3>
+			<p>
+				<button class="button --icon-some">Some text</button>
+			</p>
+			<h3>Так и как модификатор:</h3>
+			<p>
+				<button class="button button--icon-some">Some text</button>
+			</p>
+			<p>После добавления класса в объекте создастся псевдоэлемент ::before, который и будет выводить иконку</p>
+			<h2>Настройки ЧФ4 для работы со шрифтами</h2>
+			<p>В файле настроек ЧФ4 в разделе fonts вы найдете:</p>
+			<p><span>iconsfont — включает создание и подключение иконного шрифта</span></p>
+			<p><span>download — включает загрузку и локальное подключение удаленных шрифтов</span></p>
+		</div>
+	</div>
+	<script src="main.js"></script>
+</body>
+</html>
